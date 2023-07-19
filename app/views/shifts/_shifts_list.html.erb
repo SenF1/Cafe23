@@ -1,0 +1,63 @@
+<h4><%= state.capitalize %> Shifts</h4>
+
+<% if shifts.empty? %>
+  <p>There are no <%= state.downcase %> shifts at this time.</p>
+<% else %>
+
+  <table class="striped highlight">
+    <thead>
+      <% if current_user && (current_user.manager_role? || current_user.admin_role?) %>
+         <th>Employee</th>
+         <th>Role</th>
+      <% end %>
+      <th>Date</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Notes</th>
+      <th class="align_center">Options</th>
+    </thead>
+    <% for shift in shifts %>
+      <tr class="<%= 'shift-row' if shift.status == 'finished' %>" data-url="<%= shift_path(shift) if shift.status == 'finished' %>">
+        <% if current_user && (current_user.manager_role? || current_user.admin_role?) %>
+          <td><%= shift.employee.proper_name %> </td>
+          <td><%= shift.employee.role %> </td>
+        <% end %>
+        <td><%= shift.date.strftime("%m/%d/%y") %> </td>
+        <td><%= shift.start_time.strftime("%I:%M %p") %> </td>
+        <td>
+          <% if shift.end_time %>
+            <%= shift.end_time.strftime("%I:%M %p") %>
+          <% else %>
+            n/a
+          <% end %>
+        </td>
+        <td><%= shift.notes %> </td>
+        <td class="align_center">
+          <% if can? :edit, shift %>
+            <%= link_to edit_shift_path(shift) do %>
+                  <i class="material-icons">edit</i>
+              <% end %>
+              &nbsp;&nbsp;&nbsp;&nbsp; 
+            <% end %>
+          <% if can? :destroy, shift %>
+            <%= link_to(shift_path(shift), method: :delete, data: { confirm: 'Are you sure you wish to delete this information?' }) do %>
+                <i class="material-icons">delete</i>
+            <% end %>
+          <% end %>
+          <% if current_user && current_user.employee_role? %>
+            <% if shift.date == Date.current && shift.status == "pending" %>
+              <%= link_to "Start Shift", time_in_path, method: :patch, class: 'btn btn-success' %>
+            <% elsif shift.date == Date.current && shift.status == "started" %>
+              <%= link_to "End Shift", time_out_path, method: :patch, class: 'btn btn-alert' %>
+            <% else %>
+              <%= button_to "Shift completed", "#", disabled: true, class: 'btn' %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <p class="supertiny"></p>
+  <br />
+  <%= will_paginate shifts, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+<% end %>

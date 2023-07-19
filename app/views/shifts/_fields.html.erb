@@ -1,0 +1,11 @@
+<% if current_user && current_user.manager_role? %>
+    <% managed_employees = Assignment.current.for_store(current_user.current_assignment.store).map(&:employee).select { |employee| can? :show, employee } %>  
+    <%= f.input :assignment_id, collection: managed_employees.map { |e| [e.name, e.current_assignment&.id] }, include_blank: true %>
+<% else %>
+  <%= f.input :assignment_id, collection: Employee.all.active.map { |e| [e.name, e.current_assignment&.id] }, include_blank: true %>
+<% end %>
+<%= f.input :date, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :start_time, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :end_time, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :notes, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :status, collection: Shift.statuses.keys, include_blank: true %>

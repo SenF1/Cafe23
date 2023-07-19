@@ -1,0 +1,47 @@
+<h4><%= state.capitalize %> Stores owned by Cafe23</h4>
+
+<% if stores.empty? %>
+  <p>There are no <%= state.downcase %> stores at this time.</p>
+<% else %>
+
+  <table class="striped highlight">
+    <thead>
+      <th>Name</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th>Phone</th>
+      <th>Current Assignments</th>
+      <th class="align_center">Options</th>
+    </thead>
+    <% for store in stores %>
+      <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+        <td><%= store.name %></td>
+        <td><%= store.street %></td>
+        <td><%= store.city %></td>
+        <td><%= store.state %></td>
+        <td><%= store.zip %></td>
+        <td><%= number_to_phone store.phone%></td>
+        <td><%= store.assignments.count %></td>
+
+      <td class="align_center">
+        <% if can? :edit, store %>
+          <%= link_to edit_store_path(store) do %>
+                <i class="material-icons">edit</i>
+          <% end %>
+         <% end %>
+            &nbsp;
+         <% if can? :show, store %>
+          <%= link_to store_form_path(store, store_id: store.id) do %>
+              <i class="material-icons">payment</i>
+            <% end %> 
+        <% end %>
+      </td>
+      </tr>
+    <% end %>
+  </table>
+  <p class="supertiny"></p>
+  <br />
+  <%= will_paginate stores, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+<% end %>

@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-content">
+    <h5>Employee Data</h5><br />
+
+    <b>First Name:&nbsp;&nbsp;</b>
+      <%= @employee.first_name %>
+    <br/><br/>
+    <b>Last Name:&nbsp;&nbsp;</b>
+      <%= @employee.last_name %>
+    <br/><br/>
+    <b>SSN:&nbsp;&nbsp;</b>
+      <%= @employee.ssn %>
+    <br/><br/>
+    <b>Date of Birth:&nbsp;&nbsp;</b>
+      <%= @employee.date_of_birth %>
+    <br/><br/>
+    <b>Phone:&nbsp;&nbsp;</b>
+      <%= number_to_phone @employee.phone %>
+    <br/><br/>
+    <b>Role:&nbsp;&nbsp;</b>
+      <%= @employee.role %>
+    <br/><br/>
+
+  </div>
+</div>

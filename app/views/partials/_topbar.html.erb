@@ -1,0 +1,35 @@
+<div class="row valign-wrapper" id="topbar">
+  <div class="col s1">
+    <%# link_to(image_tag('logos/logo_v2_80x80.png'), home_path) %>
+  </div>
+  <div class="col s2">
+    <h2><%= link_to 'Cafe23', home_path %></h2>
+  </div>
+  <div class="col s9">
+    <nav id="nav">
+      <div class="container">
+        <ul class="right">
+          <li>
+            <% if logged_in?%>
+              <%= link_to 'Logout', logout_path, class: 'btn'%>
+            <% else %>
+              <%= link_to 'Login', login_path, class: 'btn' %>
+            <% end %>
+          </li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <% if current_user && ( current_user.admin_role? || current_user.manager_role? ) %>
+            <li><%= link_to 'Stores', stores_path %></li>
+            <li><%= link_to 'Employees', employees_path %></li>
+            <li><%= link_to 'Assignments', assignments_path %></li>
+            <li><%= link_to 'Shifts', shifts_path %></li>
+            <% if current_user && current_user.admin_role? %>
+              <li><%= link_to 'Jobs', jobs_path %></li>
+              <li><%= link_to 'Pay Grades', pay_grades_path %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </nav>  
+  </div>
+</div> 

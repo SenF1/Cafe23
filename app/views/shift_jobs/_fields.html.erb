@@ -1,0 +1,2 @@
+<%= f.input :shift_id, label_html: { class: 'active' }, input_html: { class: 'infield', value: @shift.id, readonly: true } %>
+<%= f.input :job_id, collection: Job.active.all, label_method: :name, value_method: :id %>

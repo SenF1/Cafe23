@@ -1,0 +1,6 @@
+<%= f.input :store_id, collection: Store.all.active.map { |e| [e.name, e.id] }, include_blank: true %>
+<%= f.input :employee_id, collection: Employee.all.active.map { |e| [e.name, e.id] }, include_blank: true %>
+<%= f.input :start_date, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :end_date, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :pay_grade_id, collection: PayGrade.all.active.map { |e| [e.level, e.id] }, include_blank: true %>
+

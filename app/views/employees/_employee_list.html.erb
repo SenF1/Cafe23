@@ -1,0 +1,53 @@
+<h4><%= state.capitalize %> Employees at Cafe23</h4>
+
+<% if employees.empty? %>
+  <p>There are no <%= state.downcase %> employees at this time.</p>
+<% else %>
+
+  <table class="striped highlight">
+    <thead>
+      <th>Name</th>
+      <th>Role</th>
+      <th>DOB</th>
+      <th>Current Assignment</th>
+      <th>Phone</th>
+      <th>Active?</th>
+      <th class="align_center">Options</th>
+    </thead>
+    <% for employee in employees.uniq %>
+      <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+        <td>
+          <%= link_to employee_path(employee), class: "path-link" do %>
+            <%= employee.name %>
+            <i class="material-icons">pageview</i>
+          <% end %>
+        </td>
+        <td><%= employee.role %></td>
+        <td><%= employee.date_of_birth.strftime("%m/%d/%y") %></td>
+        <% if employee.current_assignment %>
+          <td><%= employee.current_assignment.store.name %></td>
+        <% else %>
+          <td>n/a</td>
+        <% end %>
+        <td><%= number_to_phone employee.phone %></td>
+        <td><%= employee.active ? "Yes" : "No" %></td>
+        <td class="align_center">
+          <% if can? :edit, employee %>
+            <%= link_to edit_employee_path(employee) do %>
+              <i class="material-icons">edit</i>
+            <% end %> 
+          <% end %>
+          &nbsp;
+          <% if current_user && current_user.admin_role? %>
+            <%= link_to employee_form_path(employee, employee_id: employee.id) do %>
+              <i class="material-icons">payment</i>
+            <% end %> 
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <p class="supertiny"></p>
+  <br />
+  <%= will_paginate employees, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+<% end %>

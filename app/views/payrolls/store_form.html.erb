@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col s7 offset-s2">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Store Payroll</span>
+        <br>
+        <%= form_tag store_payroll_path, method: :get do %>
+            <div class="row">
+                <div class="new-form-inputs form-infield">
+                    <%= label_tag :store_id %>
+                    <% if current_user && current_user.admin_role? %>
+                        <%= select_tag :store_id, options_from_collection_for_select(Store.alphabetical.active.to_a, :id, :name, params[:store_id]), include_blank: true %>
+                    <% else %>
+                        <% managed_stores = Store.alphabetical.active.select { |store| can? :show, store } %>
+                        <%= label_tag :store_id, 'Store', class: 'active' %>
+                        <%= select_tag :store_id, options_from_collection_for_select(managed_stores, :id, :name, params[:store_id]), include_blank: true, disabled: true %>
+                    <% end %>
+                </div>
+                <div class="new-form-inputs form-infield">
+                    <%= label_tag :start_date %>
+                    <%= date_field_tag :start_date %>
+                </div>
+                <div class="new-form-inputs form-infield">
+                    <%= label_tag :end_date %>
+                    <%= date_field_tag :end_date %>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6 offset-s3 center-align"> 
+                <%= submit_tag "Generate Report", class: "btn" %>
+                </div>
+                <div class="col s3 right-align">
+                <%= link_to 'Cancel', :back, class: 'btn btn-alert' %>
+                </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

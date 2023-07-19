@@ -1,0 +1,18 @@
+<div id="tabbed">
+  <tabs>
+
+    <tab name="active shifts" v-bind:selected="true">
+      <%= render :partial => "shifts_list", locals: {shifts: @upcoming_shifts, state: 'upcoming'} %>
+    </tab>
+
+    <tab name="inactive shifts">
+      <%= render :partial => "shifts_list", locals: {shifts: @completed_shifts, state: 'completed'} %>
+    </tab>
+
+  </tabs>
+</div>
+
+<p>&nbsp;</p>
+<% if current_user && ( current_user.admin_role? || current_user.manager_role? ) %>
+  <%= render :partial => "partials/add_new_object", locals: {model_name: 'shift'} %>
+<% end %> 

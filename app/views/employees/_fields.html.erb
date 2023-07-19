@@ -1,0 +1,7 @@
+<%= f.input :first_name, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :last_name, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :ssn, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :date_of_birth, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :phone, label_html: { class: 'active' }, input_html: { class: 'infield' } %>
+<%= f.input :role, collection: Employee.roles.keys, include_blank: true %>
+<%= f.input :active %>

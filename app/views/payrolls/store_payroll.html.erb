@@ -1,0 +1,74 @@
+<h4 class="center-align">Store Payroll Report</h4>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="card payroll-report">
+        <div class="card-image">
+          <div class="payroll-image"></div>
+          <span class="card-title">Payroll Summary</span>
+        </div>
+        <div class="card-content">
+          <hr>
+          <table class="payroll-table">
+            <tbody>
+              <tr>
+                <td><strong>Period Given:</strong></td>
+                <td><%= @start_date.strftime("%B %d, %Y") %> - <%= @end_date.strftime("%B %d, %Y") %></td>
+              </tr>
+              <tr>
+                <td><strong>Store:</strong></td>
+                <td><%= @store.name %></td>
+              </tr>
+              <tr>
+                <td><strong>Total Hours Worked:</strong></td>
+                <td><%= @store_payroll.sum(&:hours) %></td>
+              </tr>
+              <tr>
+                <td><strong>Total Earnings:</strong></td>
+                <td><%= number_to_currency(@store_payroll.sum(&:pay_earned)) %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr>
+
+          <table class="payroll-table">
+            <thead>
+                <tr>
+                <th class="th-form">Employee</th>
+                <th class="th-form">SSN</th>
+                <th class="th-form">Pay Grade</th>
+                <th class="th-form">Rate</th>
+                <th class="th-form">Hours Worked</th>
+                <th class="th-form">Earnings</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% @store_payroll.each do |employee_payroll| %>
+                <tr>
+                    <td><%= employee_payroll.employee.name %></td>
+                    <td><%= employee_payroll.employee.ssn %></td>
+                    <td><%= employee_payroll.employee.pay_grades.first.level %></td>
+                    <td><%= number_to_currency(employee_payroll.employee.pay_grades.first.current_rate.rate) %></td>
+                    <td><%= employee_payroll.hours %></td>
+                    <td><%= number_to_currency(employee_payroll.pay_earned) %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+
+        <hr>
+        </div>
+            
+        <div class="card-action payroll-action">
+            <a href="#" class="waves-effect waves-light"><i class="material-icons left">print</i>Print Report</a>
+            <a href="#" class="waves-effect waves-light"><i class="material-icons left">file_download</i>Download Report</a>
+        </div>
+        
+        </div>
+    </div>
+  </div>
+</div>
+

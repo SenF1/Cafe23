@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-content">
+    <h5>Shift Data</h5><br />
+
+    <b>Date:&nbsp;&nbsp;</b>
+      <%= @shift.date.strftime("%B %d, %Y") %>
+    <br/><br/>
+    <b>Employee:&nbsp;&nbsp;</b>
+      <%= @shift.employee.name %>
+    <br/><br/>
+    <b>Start Time:&nbsp;&nbsp;</b>
+      <%= @shift.start_time.strftime("%I:%M %p") %>
+    <br/><br/>
+    <b>End Time:&nbsp;&nbsp;</b>
+      <%= @shift.end_time.strftime("%I:%M %p") %>
+    <br/><br/>
+    <b>Jobs:&nbsp;&nbsp;</b>
+      <%= @shift.jobs.map(&:name).join(", ") %> 
+      <% if can? :manage, ShiftJob %>
+        <%= link_to new_shift_job_path(shift_id: @shift.id) do %>
+          <i class="material-icons">add_box</i>
+        <% end %>
+      <% end %>
+    <br/><br/>
+
+    <b>Notes:&nbsp;&nbsp;</b>
+      <%= @shift.notes %>
+    <br/><br/>
+    <b>Status:&nbsp;&nbsp;</b>
+      <%= @shift.status %>
+    <br/><br/>
+
+  </div>
+</div>

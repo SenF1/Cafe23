@@ -1,0 +1,19 @@
+
+<% if current_user && current_user.employee_role? %>
+    <h4>Welcome back, <%= current_user.first_name %> !</h4>  
+    <br>
+    <%= render :partial => "shifts/shifts_list", locals: {shifts: current_user.shifts.upcoming.paginate(page: params[:page]).per_page(10), state: 'upcoming'} %>
+<% elsif current_user %> 
+    <h4>Welcome back, <%= current_user.first_name %> !</h4>  
+    <br>
+<% else %> 
+    <div class="row">  
+        <h4>Welcome to Cafe23 Management System</h4>  
+        <h6>Cafe23 is a chain of cafes that offer premium hot beverages and 
+        baked goods in the Greater Pittsburgh area and beyond. The links below 
+        will tell you more about our products and locations and in the near 
+        future we will be launching this web-based application so that 
+        employees can easily access data for each store, manage payrolls, and 
+        communicate with each other.</h6>
+    </div>
+<% end %> 

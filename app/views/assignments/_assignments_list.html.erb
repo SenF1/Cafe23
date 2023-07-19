@@ -1,0 +1,40 @@
+<h4>Current Assignments</h4> 
+
+<table class="striped highlight">
+  <thead>
+    <th>Start Date</th>
+    <th>Store</th>
+    <th>Employee</th>
+    <th>Pay Grade</th>
+    <th>Shift Count</th>
+    <th class="align_center">Options</th>
+  </thead>
+  <% for assignment in @current_assignments %>
+    <tr>
+      <td><%= assignment.start_date.strftime("%m/%d/%y") %> </td>
+      <td><%= assignment.store.name %> </td>
+      <td><%= assignment.employee.proper_name %> </td>
+      <td><%= assignment.pay_grade.level %> </td>
+      <td><%= assignment.shifts.size %> </td>
+      <td class="align_center">
+      <% if can? :edit, assignment %>
+        <%= link_to edit_assignment_path(assignment) do %>
+              <i class="material-icons">edit</i>
+          <% end %>
+          &nbsp;
+        <% end %>
+        <% if can? :destroy, assignment %>
+          <%= link_to(assignment_path(assignment), method: :delete, data: { confirm: 'Are you sure you wish to delete this information?' }) do %>
+              <i class="material-icons">delete</i>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<br />
+<%= will_paginate @current_assignments, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+<p>&nbsp;</p>
+<% if can? :new, assignment %>
+  <%= render :partial => "partials/add_new_object", locals: {model_name: 'assignment'} %>
+<% end %> 

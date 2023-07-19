@@ -1,0 +1,18 @@
+<div id="tabbed">
+  <tabs>
+
+    <tab name="active stores" v-bind:selected="true">
+      <%= render :partial => "stores_list", locals: {stores: @active_stores, state: 'active'} %>
+    </tab>
+
+    <tab name="inactive stores">
+      <%= render :partial => "stores_list", locals: {stores: @inactive_stores, state: 'inactive'} %>
+    </tab>
+
+  </tabs>
+</div>
+
+<p>&nbsp;</p>
+<% if current_user && current_user.admin_role? %>
+  <%= render :partial => "partials/add_new_object", locals: {model_name: 'store'} %>
+<% end %>

@@ -1,0 +1,29 @@
+<div id="login-form-row" class="row">
+  <div id="login-form-col" class="col s4">
+    <div class="card login-form">
+      <div class="card-content">
+        <span class="card-title">Log in</span>
+          <br />
+          <%= form_with url: sessions_path, local: true do |f| %>
+          <div class="control-group">
+              <%= f.label :username %>
+              <i class="material-icons prefix">account_circle</i>
+              <%= f.text_field :username, placeholder: "Enter your username", class: "login"%>
+          </div>
+          <br>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.label :password %>
+              <i class="material-icons prefix">lock</i>
+              <%= f.password_field :password, placeholder: "Enter your password", class: "login" %>
+            </div>
+          </div>
+          <br>
+          <div class="actions">
+            <%= f.submit "Log In", class: "btn" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<h4 class="center-align">Employee Payroll Report</h4>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12 m8 offset-m2">
+      <div class="card payroll-report">
+        <div class="card-image">
+          <div class="payroll-image"></div>
+          <span class="card-title">Payroll Summary</span>
+        </div>
+        <div class="card-content">
+          <hr>
+          <table class="payroll-table">
+            <tbody>
+              <tr>
+                <td><strong>Period Given:</strong></td>
+                <td><%= @start_date.strftime("%B %d, %Y") %> - <%= @end_date.strftime("%B %d, %Y") %></td>
+              </tr>
+              <tr>
+                <td><strong>Employee:</strong></td>
+                <td><%= @employee.name %></td>
+              </tr>
+              <tr>
+                <td><strong>SSN:</strong></td>
+                <td><%= @employee.ssn %></td>
+              </tr>
+              <tr>
+                <td><strong>Pay Grade:</strong></td>
+                <td><%= @employee.pay_grades.first.level %></td>
+              </tr>
+              <tr>
+                <td><strong>Rate:</strong></td>
+                <td><%= number_to_currency(@employee.pay_grades.first.current_rate.rate) %></td>
+              </tr>
+              <tr>
+                <td><strong>Hours Worked:</strong></td>
+                <td><%= @employee_payroll.hours %></td>
+              </tr>
+              <tr>
+                <td><strong>Earnings:</strong></td>
+                <td><%= number_to_currency(@employee_payroll.pay_earned) %></td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+        </div>
+        <div class="card-action payroll-action">
+          <a href="#" class="waves-effect waves-light"><i class="material-icons left">print</i>Print Report</a>
+          <a href="#" class="waves-effect waves-light"><i class="material-icons left">file_download</i>Download Report</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
